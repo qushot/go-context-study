@@ -6,13 +6,15 @@ import (
 	"time"
 )
 
-var key = "key"
+type ctxKey string
+
+var key ctxKey = "key"
 
 func infiniteLoop(ctx context.Context) {
 	innerCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 	for {
-		fmt.Printf("Help! [%s]\n", ctx.Value(key).(string))
+		fmt.Printf("Help! [%s]\n", ctx.Value(key).(ctxKey))
 		select {
 		case <-innerCtx.Done():
 			fmt.Println("Exit from hell.")
